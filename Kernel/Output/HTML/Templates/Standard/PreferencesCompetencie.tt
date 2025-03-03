@@ -1,0 +1,50 @@
+# --
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# --
+
+<table id="[% Data.Name | html %]" class="DataTable CompetencesList">
+    <thead>
+        <tr>
+            <th>[% Translate("Name") | html %]</th>
+            <th class="W20pc">[% Translate("Level") | html %]</th>
+            <th class="W10pc Center">[% Translate("Action") | html %]</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                [% Data.DefaultValueOption %]
+            </td>
+            <td>
+                [% Data.DefaultCompetenceLevelOption %]
+            </td>
+            <td class="Center">
+                <a href="#" class="AddButton" title="[% Translate("Add") | html %]">
+                    <i class="fa fa-plus-square-o"></i>
+                </a>
+            </td>
+        </tr>
+
+[% RenderBlockStart("BodyRow") %]
+        <tr>
+            <td>
+                [% Data.ValueName | html %]
+            </td>
+            <td>
+                [% Data.CompetenceLevelName | html %]
+            </td>
+            <td class="Center">
+                <a href="#" id="RemoveRow" class="RemoveButton ValueRemove" data-id="[% Data.ValueID | html %]" data-name="[% Data.ValueName | html %]" title="[% Translate("Remove") | html %]">
+                    <i class="fa fa-minus-square-o"></i>
+                </a>
+                <input class="Hidden" type="text" name="Value" value="[% Data.ValueID | html %]%%[% Data.CompetenceLevelID | html %]">
+            </td>
+        </tr>
+[% RenderBlockEnd("BodyRow") %]
+
+    </tbody>
+</table>

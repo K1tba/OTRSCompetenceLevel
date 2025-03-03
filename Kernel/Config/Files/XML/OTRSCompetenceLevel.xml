@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="2.0" init="Application">
+
+    <!--
+        Framework
+    -->
+    <Setting Name="Frontend::Module###AdminCompetenceLevel" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>admin</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">Admin</Item>
+                    <Item Key="Title" Translatable="1">Competence levels</Item>
+                    <Item Key="NavBarName">Admin</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AdminCompetenceLevel###001-Framework" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.Admin.CompetenceLevel.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AdminCompetenceLevel###001-Framework" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::NavigationModule###AdminCompetenceLevel" Required="0" Valid="1">
+        <Description Translatable="1">Admin area navigation for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group">
+                    <Array>
+                        <Item>admin</Item>
+                    </Array>
+                </Item>
+                <Item Key="GroupRo">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
+                <Item Key="Name" Translatable="1">Competence levels</Item>
+                <Item Key="Block">Ticket</Item>
+                <Item Key="Description" Translatable="1">Create and manage competence levels.</Item>
+                <Item Key="IconBig">fa-graduation-cap</Item>
+                <Item Key="IconSmall"></Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+    <!--
+        PreferencesGroups
+    -->
+    <Setting Name="PreferencesGroups###CompetencieGroups" Required="0" Valid="1">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">Group competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «Groups».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetencieGroups</Item>
+                <Item Key="Prio">100</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###CompetencieRoles" Required="0" Valid="0">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">Role competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «Roles».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetencieRoles</Item>
+                <Item Key="Prio">110</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###CompetenciePrioritys" Required="0" Valid="1">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">Priority competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «Prioritys».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetenciePrioritys</Item>
+                <Item Key="Prio">120</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###CompetencieQueues" Required="0" Valid="1">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">Queue competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «Queues».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetencieQueues</Item>
+                <Item Key="Prio">130</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###CompetencieTypes" Required="0" Valid="1">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">Type competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «Types».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetencieTypes</Item>
+                <Item Key="Prio">140</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###CompetencieServices" Required="0" Valid="0">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">Service competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «Services».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetencieServices</Item>
+                <Item Key="Prio">150</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="PreferencesGroups###CompetencieSLAs" Required="0" Valid="0">
+        <Description Translatable="1">Please note: setting 'Active' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user's behalf. Use 'PreferenceGroup' to control in which area these settings should be shown in the user interface.</Description>
+        <Navigation>Frontend::Agent::View::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::CompetenceLevel</Item>
+                <Item Key="PreferenceGroup">CompetenceLevel</Item>
+                <Item Key="Label" Translatable="1">SLA competence(s)</Item>
+                <Item Key="Desc" Translatable="1">Define competences for «SLAs».</Item>
+                <Item Key="Key" Translatable="1"></Item>
+                <Item Key="Block">RawHTML</Item>
+                <Item Key="PrefKey">UserCompetencieSLAs</Item>
+                <Item Key="Prio">160</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otrs_config>
