@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Define competences for «Roles».'} =
         'Определите компетенции для «Ролей».';
     $Self->{Translation}->{'Priority competence(s)'} = 'Компетенции по приоритетам';
-    $Self->{Translation}->{'Define competences for «Prioritys».'}
+    $Self->{Translation}->{'Define competences for «Priorities».'}
         = 'Определите компетенции для «Приоритетов».';
     $Self->{Translation}->{'Queue competence(s)'} = 'Компетенции по очередям';
     $Self->{Translation}->{'Define competences for «Queues».'}
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Type competence(s)'} = 'Компетенции по типам';
     $Self->{Translation}->{'Define competences for «Types».'}
         = 'Определите компетенции для «Типов».';
-    $Self->{Translation}->{'Service competence(s)'} = 'Компетенции по типам';
+    $Self->{Translation}->{'Service competence(s)'} = 'Компетенции по сервисам';
     $Self->{Translation}->{'Define competences for «Services».'}
         = 'Определите компетенции для «Сервисов».';
     $Self->{Translation}->{'SLA competence(s)'} = 'Компетенции по SLA';

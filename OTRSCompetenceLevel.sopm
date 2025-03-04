@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <Name>OTRSTicketAllocation</Name>
-    <Version>0.0.0</Version>
+    <Name>OTRSCompetenceLevel</Name>
+    <Version>6.0.0</Version>
     <Framework Minimum="6.0.26">6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>https://otrs.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">Competence level for user.</Description>
-    <Description Lang="ru">Реализация уровней компетентности для пользователей.</Description>
+    <Description Lang="ru">Реализация уровней компетенций для пользователей.</Description>
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCompetenceLevel.xml" />
         <File Permission="660" Location="Kernel/Language/ru_OTRSCompetenceLevel.pm" />
@@ -45,45 +45,45 @@
             <Data Key="level">1</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
-            <Data Key="created_by">1</Data>
+            <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
-            <Data Key="changed_by">1</Data>
+            <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="competence_level">
             <Data Key="name" Type="Quote">2 low</Data>
             <Data Key="level">2</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
-            <Data Key="created_by">1</Data>
+            <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
-            <Data Key="changed_by">1</Data>
+            <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="competence_level">
             <Data Key="name" Type="Quote">3 normal</Data>
             <Data Key="level">3</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
-            <Data Key="created_by">1</Data>
+            <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
-            <Data Key="changed_by">1</Data>
+            <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="competence_level">
             <Data Key="name" Type="Quote">4 high</Data>
             <Data Key="level">4</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
-            <Data Key="created_by">1</Data>
+            <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
-            <Data Key="changed_by">1</Data>
+            <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="competence_level">
             <Data Key="name" Type="Quote">5 very high</Data>
             <Data Key="level">5</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
-            <Data Key="created_by">1</Data>
+            <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
-            <Data Key="changed_by">1</Data>
+            <Data Key="change_by">1</Data>
         </Insert>
     </DatabaseInstall>
     <DatabaseUpgrade Type="post">

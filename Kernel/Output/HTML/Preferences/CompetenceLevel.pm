@@ -14,11 +14,17 @@ use warnings;
 use Kernel::Language qw(Translatable);
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::Output::HTML::Layout',
-    'Kernel::System::Cache',
     'Kernel::System::CompetenceLevel',
-    'Kernel::System::DB',
     'Kernel::System::Group',
+    'Kernel::System::JSON',
+    'Kernel::System::Priority',
+    'Kernel::System::Queue',
+    'Kernel::System::Service',
+    'Kernel::System::SLA',
+    'Kernel::System::Type',
+    'Kernel::System::User',
     'Kernel::System::Web::Request',
 );
 
@@ -46,61 +52,103 @@ sub Param {
         return ();
     }
 
+    # get needed objects
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my %DataList;
     my $Translation;
+    my $PrefKey = $Self->{ConfigItem}->{PrefKey};
 
-    if ( $Self->{ConfigItem}->{PrefKey} eq 'UserCompetencieGroups' ) {
-        %DataList =  $Kernel::OM->Get('Kernel::System::Group')->GroupList(
-            Valid => 1,
+    # get groups data
+    if ( $PrefKey eq 'UserCompetencieGroups' ) {
+        %DataList = $Kernel::OM->Get('Kernel::System::Group')->PermissionUserGet(
+            UserID => $Param{UserData}->{UserID},
+            Type   => 'ro',
         );
         $Param{Name} = 'Groups';
     }
 
-    if ( $Self->{ConfigItem}->{PrefKey} eq 'UserCompetencieRoles' ) {
-        %DataList = $Kernel::OM->Get('Kernel::System::Group')->RoleList(
-            Valid => 1,
+    # get roles data
+    elsif ( $PrefKey eq 'UserCompetencieRoles' ) {
+        %DataList = $Kernel::OM->Get('Kernel::System::Group')->PermissionUserRoleGet(
+            UserID => $Param{UserData}->{UserID},
         );
         $Param{Name} = 'Roles';
     }
 
-    if ( $Self->{ConfigItem}->{PrefKey} eq 'UserCompetenciePrioritys' ) {
+    # get priorities data
+    elsif ( $PrefKey eq 'UserCompetenciePriorities' ) {
         %DataList = $Kernel::OM->Get('Kernel::System::Priority')->PriorityList(
             Valid => 1,
         );
-        $Param{Name} = 'Prioritys';
+        $Param{Name} = 'Priorities';
         $Translation = 1;
     }
 
-    if ( $Self->{ConfigItem}->{PrefKey} eq 'UserCompetencieQueues' ) {
-        %DataList = $Kernel::OM->Get('Kernel::System::Queue')->QueueList(
-            Valid => 1,
+    # get queues data
+    elsif ( $PrefKey eq 'UserCompetencieQueues' ) {
+        %DataList = $Kernel::OM->Get('Kernel::System::Queue')->GetAllQueues(
+            UserID => $Param{UserData}->{UserID},
         );
         $Param{Name} = 'Queues';
     }
 
-    if ( $Self->{ConfigItem}->{PrefKey} eq 'UserCompetencieTypes' ) {
+    # get types data
+    elsif ( $PrefKey eq 'UserCompetencieTypes' ) {
         %DataList = $Kernel::OM->Get('Kernel::System::Type')->TypeList(
             Valid => 1,
         );
         $Param{Name} = 'Types';
     }
 
+    # get services data
+    elsif ( $PrefKey eq 'UserCompetencieServices' ) {
+
+        # if Ticket::Service is disabled
+        # do not show this box
+        if ( !$ConfigObject->Get('Ticket::Service') ) {
+            return ();
+        }
+
+        %DataList = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
+            KeepChildren => $ConfigObject->Get('Ticket::Service::KeepChildren') // 0,
+            Valid        => 1,
+            UserID => 1,
+        );
+        $Param{Name} = 'Services';
+    }
+
+    # get SLAs data
+    elsif ( $PrefKey eq 'UserCompetencieSLAs' ) {
+
+        # if Ticket::Service is disabled
+        # do not show this box
+        if ( !$ConfigObject->Get('Ticket::Service') ) {
+            return ();
+        }
+
+        %DataList = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
+            UserID => 1,
+        );
+        $Param{Name} = 'SLAs';
+    }
+
+    # get a list of competence levels
     my %CompetenceLevelList = $Kernel::OM->Get('Kernel::System::CompetenceLevel')->CompetenceLevelList(
         Valid => 1,
     );
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-    my $PrefKey = $Self->{ConfigItem}->{PrefKey};
+    # check if the user already has the specified competence level data
     if ( $Param{UserData}->{$PrefKey} ) {
-
         my $Data = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
             Data => $Param{UserData}->{$PrefKey},
         );
 
         if ( $Data ) {
+            KEY:
             for my $Key ( sort keys %{ $Data } ) {
+                next KEY if !$DataList{$Key};
 
                 my $Value = $Translation
                     ? $LayoutObject->{LanguageObject}->Translate( $DataList{$Key} )
@@ -109,6 +157,7 @@ sub Param {
                 my $CompetenceLevel
                     = $LayoutObject->{LanguageObject}->Translate( $CompetenceLevelList{$Data->{$Key}} );
 
+                # create an HTML block to display the string
                 $LayoutObject->Block(
                     Name => 'BodyRow',
                     Data => {
@@ -119,14 +168,15 @@ sub Param {
                     },
                 );
 
+                # remove the item from the list of available values,
+                # as it has already been processed
                 delete $DataList{$Key};
             }
         }
     }
 
-    $CompetenceLevelList{0} = '-';
-
     # build competence level string
+    $CompetenceLevelList{0} = '-';
     $Param{DefaultCompetenceLevelOption} = $LayoutObject->BuildSelection(
         Data         => \%CompetenceLevelList,
         Name         => 'DefaultCompetenceLevel' . $Param{Name},
@@ -136,9 +186,8 @@ sub Param {
         Translation  => 1,
     );
 
-    $DataList{0} = '-';
-
     # build competence level string
+    $DataList{0} = '-';
     $Param{DefaultValueOption} = $LayoutObject->BuildSelection(
         Data         => \%DataList,
         Name         => 'DefaultValue' . $Param{Name},
@@ -169,6 +218,7 @@ sub Param {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get array of parameter IDs
     my @IDs = $Kernel::OM->Get('Kernel::System::Web::Request')->GetArray(
         Param => 'Value'
     );
